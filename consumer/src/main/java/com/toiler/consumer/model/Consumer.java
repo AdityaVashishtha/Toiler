@@ -2,16 +2,27 @@ package com.toiler.consumer.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @Entity
 public class Consumer {
 
     @Id
-    private String consumerId;
+    @GeneratedValue
+    private int systemId;
 
-    private String consumerMobile;
+    @Column(unique = true)
+    private String mobile;
+
+    @Embedded
+    @OneToMany(mappedBy = "id")
+    @OrderColumn
+    private Address[] addresses;
+
+    @Embedded
+    @OneToOne
+    private ShoppingHistory shoppingHistory;
+
 
 }
